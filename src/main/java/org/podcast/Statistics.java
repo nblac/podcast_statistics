@@ -34,7 +34,6 @@ public class Statistics {
         return listOfPodcasts;
     }
 
-
     public ArrayList getUniquePodcastIds(ArrayList listOfPodcasts) {
         ArrayList uniquePodcasts = new ArrayList();
 
@@ -48,4 +47,30 @@ public class Statistics {
         }
         return uniquePodcasts;
     }
+
+    public JsonObject countListenedPodcastByCity(String cityName, ArrayList listOfPodcasts) {
+
+        JsonObject result = new JsonObject();
+
+        for(int i = 0; i < listOfPodcasts.toArray().length; i++){
+            JsonObject podcast = (JsonObject) listOfPodcasts.get(i);
+            JsonObject downloadIdentifier = (JsonObject) podcast.get("downloadIdentifier");
+            JsonElement readCity = podcast.get("city");
+
+            if(cityName.toLowerCase().equals(readCity.getAsString())) {
+                if(result.has(downloadIdentifier.get("showId").getAsString())) {
+                    result.addProperty(
+                            downloadIdentifier.get("showId").getAsString(),
+                            result.get(downloadIdentifier.get("showId").getAsString()).getAsInt() + 1
+                    );
+                } else {
+                    result.addProperty(downloadIdentifier.get("showId").getAsString(), 1);
+                }
+            }
+        }
+        return result;
+    }
+
+
+
 }

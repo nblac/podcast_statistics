@@ -1,5 +1,7 @@
 package org.podcast;
 
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,8 +15,9 @@ public class Main {
         //using Scanner class for large files, to read line by line
         ArrayList listOfPodcasts = stats.readUsingScanner(fileName);
         ArrayList podcastIds = stats.getUniquePodcastIds(listOfPodcasts);
+        JsonObject txt = stats.countListenedPodcastByCity("San Francisco", listOfPodcasts);
 
-        System.out.println(podcastIds);
+        System.out.println(txt);
     }
 
 }
