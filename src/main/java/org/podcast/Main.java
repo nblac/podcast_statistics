@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import static org.junit.Assert.*;
+
 
 
 public class Main {
@@ -14,10 +16,16 @@ public class Main {
 
         //using Scanner class for large files, to read line by line
         ArrayList listOfPodcasts = stats.readUsingScanner(fileName);
-        ArrayList podcastIds = stats.getUniquePodcastIds(listOfPodcasts);
-        JsonObject txt = stats.countListenedPodcastByCity("San Francisco", listOfPodcasts);
+        JsonObject listOfPodcastsByDownloads = stats.podcastsDownloadsByCity(listOfPodcasts, "San Francisco");
 
-        System.out.println(txt);
+        String mostPopularShow = stats.mostPopularShowByDownloads(listOfPodcastsByDownloads);
+        System.out.println(mostPopularShow);
+
+        assertEquals(mostPopularShow, "Most popular show is: Who Trolled Amber\nNumber of downloads is: 24");
+
+
+
+
     }
 
 }

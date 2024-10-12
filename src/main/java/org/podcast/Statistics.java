@@ -34,21 +34,8 @@ public class Statistics {
         return listOfPodcasts;
     }
 
-    public ArrayList getUniquePodcastIds(ArrayList listOfPodcasts) {
-        ArrayList uniquePodcasts = new ArrayList();
 
-        for(int i = 0; i < listOfPodcasts.toArray().length; i++){
-            JsonObject podcast = (JsonObject) listOfPodcasts.get(i);
-            JsonObject downloadIdentifier = (JsonObject) podcast.get("downloadIdentifier");
-            JsonElement element = downloadIdentifier.get("podcastId");
-            if(!uniquePodcasts.contains(element)) {
-                uniquePodcasts.add(element);
-            }
-        }
-        return uniquePodcasts;
-    }
-
-    public JsonObject countListenedPodcastByCity(String cityName, ArrayList listOfPodcasts) {
+    public JsonObject podcastsDownloadsByCity(ArrayList listOfPodcasts, String cityName) {
 
         JsonObject result = new JsonObject();
 
@@ -71,6 +58,24 @@ public class Statistics {
         return result;
     }
 
+
+
+
+    public String mostPopularShowByDownloads(JsonObject listenedPodcasts){
+        String mostPopularShow = "";
+        int maxDownloads = 0;
+
+        for(String showId : listenedPodcasts.keySet()){
+            int downloads = listenedPodcasts.get(showId).getAsInt();
+            if(downloads > maxDownloads){
+                maxDownloads = listenedPodcasts.get(showId).getAsInt();
+                mostPopularShow = showId;
+            }
+        }
+        String popularShow = String.format("Most popular show is: %s\nNumber of downloads is: %s", mostPopularShow, maxDownloads);
+
+        return popularShow;
+    }
 
 
 }
