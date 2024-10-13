@@ -85,9 +85,8 @@ public class Statistics {
                 mostPopularShow = showId;
             }
         }
-        String popularShow = String.format("Most popular show is: %s\nNumber of downloads is: %s", mostPopularShow, maxDownloads);
 
-        return popularShow;
+        return String.format("Most popular show is: %s\nNumber of downloads is: %s", mostPopularShow, maxDownloads);
     }
 
     /**
@@ -107,9 +106,8 @@ public class Statistics {
                 mostPopularDevice = device;
             }
         }
-        String popularDevice = String.format("Most popular device is: %s\nNumber of downloads is: %s", mostPopularDevice, maxDownloads);
 
-        return popularDevice;
+        return String.format("Most popular device is: %s\nNumber of downloads is: %s", mostPopularDevice, maxDownloads);
     }
 
 }
