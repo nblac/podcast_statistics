@@ -9,16 +9,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 /**
- * This class reads a large file using Scanner class from specific location,
- * get each line and transform it into a JsonObject using JsonParser class
- * and returns an array list of podcasts
- * @param fileName as string - the file location in txt format
- * @return          listOfPodcasts - an array list of podcasts
+ * FileReader class reads a file from a specific location and returns an array list of podcasts
  */
 
 public final class FileReader {
+
+    /**
+     * Reading a large file using Scanner class from specific location,
+     * get each line and transform it into a JsonObject using JsonParser class
+     * and returns an array list of podcasts
+     * @param fileName as string - the file location in txt format
+     * @return          listOfPodcasts - an array list of podcasts
+     */
     public ArrayList readUsingScanner(String fileName) throws IOException {
         // define var for file location
         Path path = Paths.get(fileName);

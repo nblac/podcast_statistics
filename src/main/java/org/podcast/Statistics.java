@@ -2,39 +2,19 @@ package org.podcast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Statistics {
 
-    public ArrayList readUsingScanner(String fileName) throws IOException {
-        // define var for file location
-        Path path = Paths.get(fileName);
-        Scanner scanner = new Scanner(path);
-
-        ArrayList<Object> listOfPodcasts = new ArrayList<>();
-        JsonParser jsonParser = new JsonParser();
-
-        //read line by line and store podcasts into an array list
-        while(scanner.hasNextLine()){
-            //process each line
-            String line = scanner.nextLine();
-            JsonObject jo = (JsonObject)jsonParser.parse(line);
-            listOfPodcasts.add(jo);
-        }
-        // close file scan
-        scanner.close();
-
-        return listOfPodcasts;
-    }
-
-
+    /**
+     * Calculates the number of podcast downloads by city.
+     *
+     * @param listOfPodcasts the list of podcasts
+     * @param cityName the name of the city
+     * @return a JsonObject containing the number of downloads for each show in the specified city
+     */
     public JsonObject podcastsDownloadsByCity(ArrayList listOfPodcasts, String cityName) {
 
         JsonObject result = new JsonObject();
@@ -59,8 +39,41 @@ public class Statistics {
     }
 
 
+    /**
+     * Calculates the number of podcast downloads by device type.
+     *
+     * @param listOfPodcasts the list of podcasts
+     * @return a JsonObject containing the number of downloads for device type
+     */
+    public JsonObject podcastsDownloadsByDevice(ArrayList listOfPodcasts) {
+
+        JsonObject result = new JsonObject();
+
+        for(int i = 0; i < listOfPodcasts.toArray().length; i++){
+            JsonObject podcast = (JsonObject) listOfPodcasts.get(i);
+            JsonElement readDevice = podcast.get("deviceType");
 
 
+            if(result.has(readDevice.getAsString())) {
+                result.addProperty(
+                        readDevice.getAsString(),
+                        result.get(podcast.get("deviceType").getAsString()).getAsInt() + 1
+                );
+            } else {
+                result.addProperty(podcast.get("deviceType").getAsString(), 1);
+            }
+
+        }
+        return result;
+    }
+
+
+    /**
+     * Determines the most popular show by the number of downloads.
+     *
+     * @param listenedPodcasts a JsonObject containing the number of downloads for each show
+     * @return a JsonObject describing the most popular show and the number of downloads
+     */
     public String mostPopularShowByDownloads(JsonObject listenedPodcasts){
         String mostPopularShow = "";
         int maxDownloads = 0;
@@ -77,5 +90,26 @@ public class Statistics {
         return popularShow;
     }
 
+    /**
+     * Determines the most popular device by the number of downloads.
+     *
+     * @param downloadsByDevice a JsonObject containing the number of downloads for each device type
+     * @return a string describing the most popular device and its number of downloads
+     */
+    public String mostPopularDeviceByDownloads(JsonObject downloadsByDevice){
+        String mostPopularDevice = "";
+        int maxDownloads = 0;
+
+        for(String device : downloadsByDevice.keySet()){
+            int downloads = downloadsByDevice.get(device).getAsInt();
+            if(downloads > maxDownloads){
+                maxDownloads = downloadsByDevice.get(device).getAsInt();
+                mostPopularDevice = device;
+            }
+        }
+        String popularDevice = String.format("Most popular device is: %s\nNumber of downloads is: %s", mostPopularDevice, maxDownloads);
+
+        return popularDevice;
+    }
 
 }
