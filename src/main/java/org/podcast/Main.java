@@ -1,7 +1,6 @@
 package org.podcast;
 
 import com.google.gson.JsonObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
