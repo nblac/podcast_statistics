@@ -1,9 +1,9 @@
 package org.podcast;
 
 import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import static org.junit.Assert.*;
 
 
 public class Main {
@@ -13,20 +13,21 @@ public class Main {
         Statistics stats = new Statistics();
 
         ArrayList listOfPodcasts = fileReader.readUsingScanner(fileName);
-        JsonObject listOfPodcastsByDownloads = stats.podcastsDownloadsByCity(listOfPodcasts, "San Francisco");
-//        System.out.println(listOfPodcastsByDownloads);
 
+        JsonObject listOfPodcastsByDownloads = stats.podcastsDownloadsByCity(listOfPodcasts, "San Francisco");
         String mostPopularShow = stats.mostPopularShowByDownloads(listOfPodcastsByDownloads);
         System.out.println(mostPopularShow);
 
-        assertEquals(mostPopularShow, "Most popular show is: Who Trolled Amber\nNumber of downloads is: 24");
-
         JsonObject downloadsByDevice = stats.podcastsDownloadsByDevice(listOfPodcasts);
-//        System.out.println(downloadsByDevice);
-
         String mostPopularDevice = stats.mostPopularDeviceByDownloads(downloadsByDevice);
         System.out.println(mostPopularDevice);
-        assertEquals(mostPopularDevice, "Most popular device is: mobiles & tablets\nNumber of downloads is: 60");
+
+
+        JsonObject opportunitiesToInsertCommercial = stats.opportunitiesToInsertCommercial(listOfPodcasts);
+        System.out.println(stats.arrangeOpportunitiesToInsertCommercialHighToLow(opportunitiesToInsertCommercial));
+        JsonObject ttt = stats.arrangeOpportunitiesToInsertCommercialHighToLow(opportunitiesToInsertCommercial);
+        String see = stats.formatStringsForOpportunitiesToInsertCommercial(ttt);
+        System.out.println(see);
     }
 
 }
