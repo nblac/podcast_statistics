@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.io.IOException;
-import java.util.ArrayList;
-import static org.junit.Assert.assertEquals;
 
 
 class StatisticsTest {
@@ -30,14 +27,6 @@ class StatisticsTest {
 
     @Test
     void podcastsDownloadsByCityTest() {
-
-        JsonObject listOfPodcastsByDownloads = stats.podcastsDownloadsByCity(listOfPodcasts, "San Francisco");
-        String mostPopularShow = stats.mostPopularShowByDownloads(listOfPodcastsByDownloads);
-        System.out.println(mostPopularShow);
-
-        assertEquals(mostPopularShow, "Most popular show is: Who Trolled Amber\nNumber of downloads is: 24");
-    void podcastsDownloadsByCityTest() {
-
         String expectedString = "Most popular show is: Who Trolled Amber\nNumber of downloads is: 24";
 
         JsonObject listOfPodcastsByDownloads = stats.podcastsDownloadsByCity(listOfPodcasts, "San Francisco");
@@ -48,11 +37,7 @@ class StatisticsTest {
     }
 
     @Test
-    void podcastsDownloadsByDeviceTest() {
-        JsonObject downloadsByDevice = stats.podcastsDownloadsByDevice(listOfPodcasts);
-        String mostPopularDevice = stats.mostPopularDeviceByDownloads(downloadsByDevice);
-        System.out.println(mostPopularDevice);
-        assertEquals(mostPopularDevice, "Most popular device is: mobiles & tablets\nNumber of downloads is: 60");
+
     void podcastsDownloadsByDeviceTest() {
         String expectedString = "Most popular device is: mobiles & tablets\nNumber of downloads is: 60";
         JsonObject downloadsByDevice = stats.podcastsDownloadsByDevice(listOfPodcasts);
@@ -65,13 +50,6 @@ class StatisticsTest {
 
     @Test
     void listTheOpportunitiesToInsertCommercial(){
-        String expectedResult = """
-                                    Show Id: Stuff You Should Know, Preroll Opportunity Number: 40
-                                    Show Id: Who Trolled Amber, Preroll Opportunity Number: 40
-                                    Show Id: Crime Junkie, Preroll Opportunity Number: 30
-                                    Show Id: The Joe Rogan Experience, Preroll Opportunity Number: 10
-                                """;
-    void listTheOpportunitiesToInsertCommercial(){
         String expectedString = """
                                     Show Id: Stuff You Should Know, Preroll Opportunity Number: 40
                                     Show Id: Who Trolled Amber, Preroll Opportunity Number: 40
@@ -81,12 +59,6 @@ class StatisticsTest {
 
         JsonObject opportunitiesToInsertCommercial = stats.opportunitiesToInsertCommercial(listOfPodcasts);
         JsonObject sortedObject = stats.arrangeOpportunitiesToInsertCommercialHighToLow(opportunitiesToInsertCommercial);
-
-        JsonObject opportunitiesToInsertCommercial = stats.opportunitiesToInsertCommercial(listOfPodcasts);
-        JsonObject sortedObject = stats.arrangeOpportunitiesToInsertCommercialHighToLow(opportunitiesToInsertCommercial);
-
-        String returnedString =  stats.formatStringsForOpportunitiesToInsertCommercial(sortedObject);
-        assertEquals(expectedResult, returnedString);
         String returnedString =  stats.formatStringsForOpportunitiesToInsertCommercial(sortedObject);
 
         assertEquals(expectedString, returnedString);
