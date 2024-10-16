@@ -5,11 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import com.google.gson.JsonPrimitive;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+
+import java.util.concurrent.TimeUnit;
+
+
 
 
 public class Statistics {
@@ -190,4 +194,45 @@ public class Statistics {
         }
         return result.toString();
     }
+
+
+
+    // starting from podcast opportunities > originalEventTime
+    // get the weekly shows day and hour
+    public JsonObject getWeeklyShowsDetails(ArrayList listOfPodcasts){
+        JsonObject results = new JsonObject();
+
+        for (int i = 0; i < listOfPodcasts.toArray().length; i++) {
+            JsonObject podcast = (JsonObject) listOfPodcasts.get(i);
+            JsonObject downloadIdentifier = podcast.get("downloadIdentifier").getAsJsonObject();
+            String currentPodcastId = downloadIdentifier.get("podcastId").getAsString();
+            String showId = downloadIdentifier.get("showId").getAsString();
+
+            // get timestamp in unix format from first element - all have same timestamp
+            JsonArray opportunitiesJsonNode = (JsonArray) podcast.get("opportunities");
+            JsonObject opportunity = opportunitiesJsonNode.get(0).getAsJsonObject();
+            long originalEventTime = opportunity.get("originalEventTime").getAsLong();
+//            Date currentEventDate = new Date(originalEventTime);
+
+            if (i + 1 < listOfPodcasts.size()) {
+                JsonObject nextPodcast = (JsonObject) listOfPodcasts.get(i + 1);
+                JsonObject nextDownloadIdentifier = nextPodcast.get("downloadIdentifier").getAsJsonObject();
+                String nextPodcastId = nextDownloadIdentifier.get("podcastId").getAsString();
+                JsonArray nextOpportunitiesJsonNode = (JsonArray) nextPodcast.get("opportunities");
+
+                // get timestamp in unix format from first element - all have same timestamp
+                JsonObject nextOpportunity = nextOpportunitiesJsonNode.get(0).getAsJsonObject();
+                long nextOriginalEventTime = nextOpportunity.get("originalEventTime").getAsLong();
+
+                long diffInMillies = Math.abs(nextOriginalEventTime - originalEventTime);
+                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                if(diff == 7){
+                    System.out.println("Podcast "+ currentPodcastId + " for showId: " + showId + " is weekly");
+                }
+            }
+        }
+        return results;
+
+    }
+
 }

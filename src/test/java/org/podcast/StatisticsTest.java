@@ -63,4 +63,9 @@ class StatisticsTest {
 
         assertEquals(expectedString, returnedString);
     }
+
+    @Test
+    void returnWeeklyShowsDayAndHour(){
+        stats.getWeeklyShowsDetails(listOfPodcasts);
+    }
 }
