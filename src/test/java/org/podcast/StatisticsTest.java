@@ -78,7 +78,6 @@ class StatisticsTest {
                 """;
 
         Set showsList = stats.getWeeklyShowsDetails(listOfPodcasts);
-
         ArrayList<String> showsSordedList = new ArrayList<>(showsList);
         Collections.sort(showsSordedList);
 
