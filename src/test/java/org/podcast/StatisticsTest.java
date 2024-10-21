@@ -85,6 +85,8 @@ class StatisticsTest {
         for(int i = 0; i < showsSordedList.size(); i++){
             formatedOutput.append(showsSordedList.get(i)).append("\n");
         }
-        assertEquals(expectedString, formatedOutput.toString());
+        String weeklyShowsDayHour = formatedOutput.toString();
+        System.out.println(weeklyShowsDayHour);
+        assertEquals(expectedString, weeklyShowsDayHour);
     }
 }
