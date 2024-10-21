@@ -78,12 +78,12 @@ class StatisticsTest {
                 """;
 
         Set showsList = stats.getWeeklyShowsDetails(listOfPodcasts);
-        ArrayList<String> showsSortedList = new ArrayList<>(showsList);
-        Collections.sort(showsSortedList);
+        ArrayList<String> showsSordedList = new ArrayList<>(showsList);
+        Collections.sort(showsSordedList);
 
         StringBuilder formatedOutput = new StringBuilder("Weekly shows are:\n\n");
-        for(int i = 0; i < showsSortedList.size(); i++){
-            formatedOutput.append(showsSortedList.get(i)).append("\n");
+        for(int i = 0; i < showsSordedList.size(); i++){
+            formatedOutput.append(showsSordedList.get(i)).append("\n");
         }
         String weeklyShowsDayHour = formatedOutput.toString();
         System.out.println(weeklyShowsDayHour);
